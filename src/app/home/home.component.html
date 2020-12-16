@@ -1,0 +1,92 @@
+<div class="navbar-header navbar-fixed-top">  
+    <div class="container-fluid white-bg">
+    <a class="navbar-brand" href="/home/{{user.id}}">
+        <h3>Instagram</h3>
+    </a>
+    </div>
+</div>
+
+<div class="row mtop-50">
+  <div class=""> 
+    <div *ngIf="!user.posts.length>0" class="row"style="padding:15px !important;" >
+      <div class="nopost">
+        <img  src="https://image.flaticon.com/icons/svg/1362/1362857.svg" />
+      </div>
+      <div class="newpost"> 
+        <h3>No Posts Yet</h3>
+        <h3>add a post now</h3>
+        <input type='file' (change)="onSelectFile($event,user)" multiple>
+      </div>
+    </div>
+    <div *ngIf="user.posts.length>0" class="hidden-lg hidden-md col-sm-12 col-xs-12">
+      <div class="myprofile" style="padding: 0px 30px;">
+          
+          <div *ngFor="let story of user.stories " style="display:inline-block; width:65px;">
+            
+            <div class="myprofile-pic">
+              <div class="crop">
+                <img src="{{story.profilepic}}"/>
+              </div>          
+            </div>
+            
+          </div>
+          <div class="profile-main add-post">
+            <h5>Add Post</h5>
+            <input type='file' (change)="onSelectFile($event,user)" multiple>
+          </div>
+        </div>
+    </div>
+    <div *ngIf="user.posts" class=""style="padding:15px !important;" >
+      <div *ngFor="let post of (user.posts.reverse()); index as i" class="col-md-8 col-xs-12 col-sm-12 col-lg-8 post-wrapper">
+      <div class="post-header">
+        <div class="profile-pic">
+          <img src="{{post.profilepic}}"/>
+        </div>
+        <h4 class="profile-name">{{post.name}}</h4>
+      </div>  
+      <div class="post-body">
+        <div class="crop">
+          <img src="{{post.img}}" (dblclick)="updateImg(true,post.id,user)">
+        </div>
+      </div>
+      <div class="post-footer">
+        <div class="post-btn-section">
+          <div class="like">
+            <img *ngIf="!post.liked" (click)="post.liked = true" src="https://image.flaticon.com/icons/svg/1077/1077035.svg"/>
+            <img *ngIf="post.liked" (click)="post.liked = false" src="https://image.flaticon.com/icons/svg/148/148836.svg"/>
+          </div>
+          <div class="comment">
+            <img src="https://image.flaticon.com/icons/svg/2462/2462719.svg"/>
+          </div>
+          <div class="right">
+            <div class="save-post">
+              <img *ngIf="!post.savepost"src="https://image.flaticon.com/icons/svg/1159/1159580.svg"/>
+              <img *ngIf="post.savepost"src="https://image.flaticon.com/icons/svg/1159/1159823.svg"/>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="post.likes>0"  class="liked-by">
+          <div class="likedby-profile-pic">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQIi3vEDnvue29P8-GSDrcxFn-pGNcSjoRQomgvqvxPqBB9tIwL"/>
+          </div>
+          <div class="likedby-uname"><span *ngIf="!post.liked">Liked by <span class="bold">Santoravi</span>and <span class="bold">{{post.likes}} others</span> </span> <span *ngIf="post.liked"><span class="bold">You</span> and <span class="bold">{{post.likes}} others</span> liked this photo</span> 
+          </div>
+        </div>
+        <div class="caption-div">
+            <div class="current-user">
+              {{post.name}}
+            </div>
+            <div class="caption">
+              {{post.caption}}
+            </div>
+        </div>
+       
+        <div class="comments-posted-time">
+          {{post.posttime}} hours ago
+        </div>
+      </div>
+    </div>
+    
+    </div>
+  </div>
+</div>
